@@ -14,7 +14,7 @@ function deferred () {
 	return {resolve: resolver, reject: rejecter, promise: promise};
 }
 
-function rdis (store, op, key, data) {
+function adapter (store, op, key, data) {
 	let defer = deferred(),
 		record = key !== undefined,
 		config = store.adapters.redis,
@@ -24,7 +24,7 @@ function rdis (store, op, key, data) {
 
 	if (op === "get") {
 		client.get(lkey, function (e, reply) {
-			let result = JSON.parse(reply.toString());
+			let result = JSON.parse((reply ? reply.toString() : null));
 
 			if (e) {
 				defer.reject(e);
@@ -36,9 +36,7 @@ function rdis (store, op, key, data) {
 				defer.reject([]);
 			}
 		});
-	}
-
-	if (op === "remove") {
+	} else if (op === "remove") {
 		client.del(lkey, function (e) {
 			if (e) {
 				defer.reject(e);
@@ -46,9 +44,7 @@ function rdis (store, op, key, data) {
 				defer.resolve(true);
 			}
 		});
-	}
-
-	if (op === "set") {
+	} else if (op === "set") {
 		client.set(lkey, JSON.stringify(data), function (e) {
 			if (e) {
 				defer.reject(e);
@@ -61,4 +57,4 @@ function rdis (store, op, key, data) {
 	return defer.promise;
 }
 
-module.exports = rdis;
+module.exports = adapter;

@@ -1,11 +1,14 @@
 {
   "name": "haro-redis",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Redis persistent storage adapter for Harō",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/avoidwork/haro-redis.git"
+  },
+  "scripts": {
+    "test": "grunt test"
   },
   "keywords": [
     "redis",
