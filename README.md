@@ -1,6 +1,6 @@
 # haro-redis
 
-[![build status](https://secure.travis-ci.org/avoidwork/haro-localStorage.svg)](http://travis-ci.org/avoidwork/haro-localStorage)
+[![build status](https://secure.travis-ci.org/avoidwork/haro-redis.svg)](http://travis-ci.org/avoidwork/haro-redis)
 
 [Harō](http://haro.rocks) is a modern immutable DataStore built with ES6 features, which can be wired to an API for a 
 complete feedback loop. It is un-opinionated, and offers a plug'n'play solution to modeling, searching, & managing data 
