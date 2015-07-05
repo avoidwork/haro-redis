@@ -1,6 +1,6 @@
 {
   "name": "haro-redis",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Redis persistent storage adapter for Harō",
   "main": "lib/index.js",
   "repository": {
