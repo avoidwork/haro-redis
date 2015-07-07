@@ -24,7 +24,7 @@ function adapter (store, op, key, data) {
 
 	if (op === "get") {
 		client.get(lkey, function (e, reply) {
-			let result = JSON.parse((reply ? reply.toString() : null));
+			let result = JSON.parse(reply || null);
 
 			if (e) {
 				defer.reject(e);
@@ -33,7 +33,7 @@ function adapter (store, op, key, data) {
 			} else if (record) {
 				defer.reject(new Error("Record not found in redis"));
 			} else {
-				defer.reject([]);
+				defer.resolve([]);
 			}
 		});
 	} else if (op === "remove") {
@@ -45,7 +45,7 @@ function adapter (store, op, key, data) {
 			}
 		});
 	} else if (op === "set") {
-		client.set(lkey, JSON.stringify(data), function (e) {
+		client.set(lkey, JSON.stringify(record ? data : store.toArray()), function (e) {
 			if (e) {
 				defer.reject(e);
 			} else {
