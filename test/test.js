@@ -26,8 +26,9 @@ exports["get - datastore"] = {
 		this.store = haro(null, config);
 		this.store.register("redis", adapter);
 		this.key = this.store.adapters.redis.prefix;
-		this.client.set(this.key, JSON.stringify(this.data));
-		done();
+		this.client.set(this.key, JSON.stringify(this.data), function () {
+			done();
+		});
 	},
 	test: function (test) {
 		var self = this;
@@ -61,8 +62,9 @@ exports["get - record"] = {
 		this.store = haro(null, config);
 		this.store.register("redis", adapter);
 		this.key = this.store.adapters.redis.prefix + "_" + this.data[0].guid;
-		this.client.set(this.key, JSON.stringify(this.data[0]));
-		done();
+		this.client.set(this.key, JSON.stringify(this.data[0]), function () {
+			done();
+		});
 	},
 	test: function (test) {
 		var self = this;
@@ -132,8 +134,9 @@ exports["set - record"] = {
 		this.store = haro(null, config);
 		this.store.register("redis", adapter);
 		this.key = this.store.adapters.redis.prefix;
-		this.client.set(this.key, JSON.stringify(this.data));
-		done();
+		this.client.set(this.key, JSON.stringify(this.data), function () {
+			done();
+		});
 	},
 	test: function (test) {
 		var self = this;
