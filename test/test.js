@@ -108,7 +108,7 @@ exports["set - datastore"] = {
 			test.equal(self.store.total, 2, "Should be 2");
 			return self.store.save("redis");
 		}, function (e) {
-			console.error(e.stack || e.message || e); test.done();
+			throw e;
 		}).then(function () {
 			self.client.get(self.key, function (e, data) {
 				var ldata = JSON.parse(data);
@@ -151,8 +151,7 @@ exports["set - record"] = {
 				test.equal(self.store.total, 2, "Should be 2");
 				return self.store.set(null, {guid: "ghi", yay: true});
 			}, function (e) {
-				console.log(e.stack);
-				test.done();
+				throw e;
 			}).then(function (arg) {
 				self.client.get(self.key + "_" + arg[0], function (e, data) {
 					var record = JSON.parse(data);
@@ -189,11 +188,11 @@ exports["remove - datastore"] = {
 			test.equal(self.store.total, 2, "Should be 2");
 			return self.store.save("redis");
 		}, function (e) {
-			console.error(e.stack || e.message || e); test.done();
+			throw e;
 		}).then(function () {
 			return self.store.unload("redis");
 		}, function (e) {
-			console.error(e.stack || e.message || e); test.done();
+			throw e;
 		}).then(function () {
 			self.client.get(self.key, function (e, data) {
 				var ldata = JSON.parse(data || null);
@@ -232,7 +231,7 @@ exports["remove - record"] = {
 			test.equal(self.store.total, 2, "Should be 2");
 			return self.store.unload("redis", key);
 		}, function (e) {
-			console.error(e.stack || e.message || e); test.done();
+			throw e;
 		}).then(function () {
 			self.client.get(self.key + "_" + key, function (e, data) {
 				var ldata = JSON.parse(data || null);

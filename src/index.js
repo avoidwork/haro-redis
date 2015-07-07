@@ -1,7 +1,9 @@
 "use strict";
 
+const Map = require("es6-map");
 const Promise = require("es6-promise").Promise;
 const redis = require("redis");
+let registry = new Map();
 
 function deferred () {
 	let promise, resolver, rejecter;
@@ -14,13 +16,21 @@ function deferred () {
 	return {resolve: resolver, reject: rejecter, promise: promise};
 }
 
+function getClient (id, port, host, options) {
+	if (!registry.has(id)) {
+		registry.set(id, redis.createClient(port, host, options));
+	}
+
+	return registry.get(id);
+}
+
 function adapter (store, op, key, data) {
 	let defer = deferred(),
 		record = key !== undefined,
 		config = store.adapters.redis,
 		prefix = config.prefix || store.id,
 		lkey = prefix + (record ? "_" + key : ""),
-		client = redis.createClient(config.port, config.host, config.options);
+		client = getClient(store.id, config.port, config.host, config.options);
 
 	if (op === "get") {
 		client.get(lkey, function (e, reply) {
