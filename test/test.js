@@ -47,7 +47,7 @@ exports["get - datastore"] = {
 					test.equal(self.store.total, 2, "Should be 2");
 					test.done();
 				}, function (e) {
-					throw e;
+					console.error(e.stack || e.message || e); test.done();
 				});
 			}
 		});
@@ -81,7 +81,7 @@ exports["get - record"] = {
 					test.equal(self.store.total, 1, "Should be 1");
 					test.done();
 				}, function (e) {
-					throw e;
+					console.error(e.stack || e.message || e); test.done();
 				});
 			}
 		});
@@ -106,7 +106,7 @@ exports["set - datastore"] = {
 			test.equal(self.store.total, 2, "Should be 2");
 			return self.store.save("redis");
 		}, function (e) {
-			throw e;
+			console.error(e.stack || e.message || e); test.done();
 		}).then(function () {
 			self.client.get(self.key, function (e, data) {
 				var ldata = JSON.parse(data);
@@ -120,7 +120,7 @@ exports["set - datastore"] = {
 				test.done();
 			});
 		}, function (e) {
-			throw e;
+			console.error(e.stack || e.message || e); test.done();
 		});
 	}
 };
@@ -186,11 +186,11 @@ exports["remove - datastore"] = {
 			test.equal(self.store.total, 2, "Should be 2");
 			return self.store.save("redis");
 		}, function (e) {
-			throw e;
+			console.error(e.stack || e.message || e); test.done();
 		}).then(function () {
 			return self.store.unload("redis");
 		}, function (e) {
-			throw e;
+			console.error(e.stack || e.message || e); test.done();
 		}).then(function () {
 			self.client.get(self.key, function (e, data) {
 				var ldata = JSON.parse(data || null);
@@ -204,7 +204,7 @@ exports["remove - datastore"] = {
 				test.done();
 			});
 		}, function (e) {
-			throw e;
+			console.error(e.stack || e.message || e); test.done();
 		});
 	}
 };
@@ -229,7 +229,7 @@ exports["remove - record"] = {
 			test.equal(self.store.total, 2, "Should be 2");
 			return self.store.unload("redis", key);
 		}, function (e) {
-			throw e;
+			console.error(e.stack || e.message || e); test.done();
 		}).then(function () {
 			self.client.get(self.key + "_" + key, function (e, data) {
 				var ldata = JSON.parse(data || null);
@@ -240,10 +240,11 @@ exports["remove - record"] = {
 					test.equal(ldata, null, "Should match");
 				}
 
+				self.store.unload("redis", key);
 				test.done();
 			});
 		}, function (e) {
-			throw e;
+			console.error(e.stack || e.message || e); test.done();
 		});
 	}
 };
