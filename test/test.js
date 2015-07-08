@@ -242,7 +242,7 @@ exports["remove - record"] = {
 					test.equal(ldata, null, "Should match");
 				}
 
-				self.store.unload("redis", key);
+				self.store.unload("redis");
 				test.done();
 			});
 		}, function (e) {
