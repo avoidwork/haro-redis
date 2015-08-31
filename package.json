@@ -1,6 +1,6 @@
 {
   "name": "haro-redis",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Redis persistent storage adapter for Harō",
   "main": "lib/index.js",
   "repository": {
@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "es6-map": "^0.1.1",
-    "es6-promise": "^2.1.1",
-    "redis": "^0.12.1"
+    "redis": "^0.12.1",
+    "tiny-defer": "^1.0.2"
   }
 }

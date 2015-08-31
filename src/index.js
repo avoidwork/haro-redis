@@ -1,20 +1,10 @@
 "use strict";
 
 const Map = require("es6-map");
-const Promise = require("es6-promise").Promise;
+const deferred = require("tiny-defer");
 const redis = require("redis");
+
 let registry = new Map();
-
-function deferred () {
-	let promise, resolver, rejecter;
-
-	promise = new Promise(function (resolve, reject) {
-		resolver = resolve;
-		rejecter = reject;
-	});
-
-	return {resolve: resolver, reject: rejecter, promise: promise};
-}
 
 function getClient (id, port, host, options) {
 	if (!registry.has(id)) {
